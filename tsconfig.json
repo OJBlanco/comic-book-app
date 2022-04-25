@@ -1,0 +1,70 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "baseUrl": "./src/",
+    "paths": {
+      "assets/*": [
+        "./assets/*"
+      ],
+      "icons/*": [
+        "./assets/icons/*"
+      ],
+      "styles/*": [
+        "./assets/styles/*"
+      ],
+      "fonts/*": [
+        "./assets/fonts/*"
+      ],
+      "hooks/*": [
+        "./hooks/*"
+      ],
+      "models/*": [
+        "./models/*"
+      ],
+      "reducers/*": [
+        "./reducers/*"
+      ],
+      "helpers/*": [
+        "./helpers/*"
+      ],
+      "shared/*": [
+        "./shared/*"
+      ],
+      "forms/*": [
+        "./shared/forms/*"
+      ],
+      "pages/*": [
+        "./pages/*"
+      ],
+      "services/*": [
+        "./services/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
