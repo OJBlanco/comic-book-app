@@ -66,7 +66,7 @@ export const UseRequest = (
     if (method === 'GET' || method === 'DELETE') {
       qs = Object.keys(body).length > 0 ? `?${getQueryString(body)}` : ''
     }
-    const url = `https://cors-anywhere.herokuapp.com/${process.env.COMIC_URL_API}${path}${qs}`
+    const url = `https://cors-anywhere.herokuapp.com/${path}${qs}`
 
     // eslint-disable-next-line no-undef
     const request = await fetch(url, options)
@@ -82,7 +82,6 @@ export const UseRequest = (
         if (status === 200 || status === 201 || status === 204) {
           setResponse(data)
           resolve(data)
-          console.log('>>> data', data)
           setLoading(false)
         } else {
           reject(data)

@@ -11,12 +11,18 @@ const { Title, Text } = Typography
  * @param props.title string
  * @param props.date string
  * @param props.image string
+ * @param props.onClick () => void
  * @returns ReactElement
  */
-export const CardComicList: FC<CardData> = ({ title, date, image }) => {
+export const CardComicList: FC<CardData> = ({
+  title,
+  date,
+  image,
+  onClick,
+}) => {
   return (
     <>
-      <ContainerCard>
+      <ContainerCard onClick={onClick}>
         <Thumbnail>
           <img src={image} alt={title} />
         </Thumbnail>

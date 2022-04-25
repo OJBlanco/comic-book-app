@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom'
 import { MainLayout } from 'shared/layouts/main.layout'
 
 const DashboardPage = lazy(() => import('pages/dashboard'))
+const DetailPage = lazy(() => import('pages/detail'))
 
 /**
  * PublicRoutes
@@ -17,6 +18,9 @@ export const PublicRoutes: FC = () => {
       <Switch>
         <Route exact path="/">
           <DashboardPage />
+        </Route>
+        <Route exact path="/comic/:id">
+          <DetailPage />
         </Route>
       </Switch>
     </MainLayout>

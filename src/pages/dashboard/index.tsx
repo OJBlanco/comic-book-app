@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { FC, useEffect, useState } from 'react'
 
+import { useHistory } from 'react-router-dom'
+
 import { UseRequest } from 'services/request.service'
+import { CardSkeleton } from 'shared/loadings/card-skeleton'
 
 import { CardComicGrid } from './components/card-comic-grid'
 import { CardComicList } from './components/card-comic-list'
@@ -16,9 +19,11 @@ const Dashboard: FC = () => {
   const [comics, setComics] = useState<Comic[]>([])
   const [mode, setMode] = useState<string | number>('list')
 
+  const history = useHistory()
+
   const [query, { loading }]: [query: Irequest, response: Iresponse] =
     UseRequest(
-      `?api_key=${process.env.COMIC_API_KEY}&format=json&limit=50`,
+      `${process.env.COMIC_URL_API}?api_key=${process.env.COMIC_API_KEY}&format=json&limit=50`,
       'GET'
     )
 
@@ -44,17 +49,35 @@ const Dashboard: FC = () => {
     setMode(value)
   }
 
+  /**
+   * @param url
+   */
+  const handleClick = (url: string): void => {
+    const id = url
+      .replace(process.env.COMIC_URL_DETAIL_API as string, '')
+      .replace('/', '')
+    history.push(`/comic/${id}`)
+  }
+
   return (
     <>
       <Navbar onChange={handleChangeMode} value={mode} />
-      {mode !== 'list' ? (
+      {loading ? (
+        <ContainerGrid>
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </ContainerGrid>
+      ) : mode !== 'list' ? (
         <ContainerGrid>
           {comics.map(comic => (
             <CardComicGrid
               key={comic.id}
-              title={comic.volume.name}
-              date={comic.date_last_updated}
-              image={comic.image.medium_url}
+              title={`${comic.name} ${comic.issue_number}`}
+              date={comic.date_added}
+              image={comic.image.original_url}
+              onClick={(): void => handleClick(comic.api_detail_url)}
             />
           ))}
         </ContainerGrid>
@@ -63,9 +86,10 @@ const Dashboard: FC = () => {
           {comics.map(comic => (
             <CardComicList
               key={comic.id}
-              title={comic.volume.name}
-              date={comic.date_last_updated}
-              image={comic.image.medium_url}
+              title={`${comic.name} ${comic.issue_number}`}
+              date={comic.date_added}
+              image={comic.image.original_url}
+              onClick={(): void => handleClick(comic.api_detail_url)}
             />
           ))}
         </ContainerList>

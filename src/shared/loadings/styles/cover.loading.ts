@@ -7,10 +7,13 @@ export const ContainerCover = styled.div`
   top: 0;
   width: 100vw;
   z-index: 1300;
+  background-color: #fff;
 `
 
 export const ContainerSpinner = styled.div`
   display: flex;
-  align-elements: center;
+  align-items: center;
   justify-content: center;
+  height: 100%;
+  width: 100%;
 `

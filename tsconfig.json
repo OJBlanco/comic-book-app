@@ -21,9 +21,6 @@
       "assets/*": [
         "./assets/*"
       ],
-      "icons/*": [
-        "./assets/icons/*"
-      ],
       "styles/*": [
         "./assets/styles/*"
       ],
@@ -36,17 +33,11 @@
       "models/*": [
         "./models/*"
       ],
-      "reducers/*": [
-        "./reducers/*"
-      ],
       "helpers/*": [
         "./helpers/*"
       ],
       "shared/*": [
         "./shared/*"
-      ],
-      "forms/*": [
-        "./shared/forms/*"
       ],
       "pages/*": [
         "./pages/*"
