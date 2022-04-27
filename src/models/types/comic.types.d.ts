@@ -17,6 +17,7 @@ interface Comic {
   site_detail_url: string
   store_date?: null
   volume: Volume
+  isFavorite?: boolean
 }
 
 interface Image {
@@ -44,6 +45,8 @@ interface CardData {
   date: string
   image: string
   onClick: () => void
+  onFavorite: () => void
+  isFavorite?: boolean
 }
 
 interface DetailComic {

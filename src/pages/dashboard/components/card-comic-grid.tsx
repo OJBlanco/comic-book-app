@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { Card } from 'antd'
 
 import { ButtonCard } from '../styles'
+import { FavoriteButton } from './favorite-button'
 
 const { Meta } = Card
 
@@ -12,6 +13,8 @@ const { Meta } = Card
  * @param props.date string
  * @param props.image string
  * @param props.onClick () => void
+ * @param props.onFavorite () => void
+ * @param props.isFavorite boolean
  * @returns ReactElement
  */
 export const CardComicGrid: FC<CardData> = ({
@@ -19,10 +22,18 @@ export const CardComicGrid: FC<CardData> = ({
   date,
   image,
   onClick,
-}) => (
-  <ButtonCard onClick={onClick}>
-    <Card hoverable cover={<img alt={title} src={image} />}>
-      <Meta title={title} description={date} />
-    </Card>
-  </ButtonCard>
-)
+  onFavorite,
+  isFavorite,
+}) => {
+  return (
+    <ButtonCard onClick={onClick}>
+      <Card hoverable cover={<img alt={title} src={image} />}>
+        <Meta title={title} description={date} />
+        <FavoriteButton
+          onClick={onFavorite}
+          isFavorite={isFavorite as boolean}
+        />
+      </Card>
+    </ButtonCard>
+  )
+}

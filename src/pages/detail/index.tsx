@@ -1,5 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react'
 
+import { ecomCart, EcomCart } from '@ecomplus/shopping-cart'
 import { Card, PageHeader } from 'antd'
 import { useHistory, useParams } from 'react-router-dom'
 
@@ -37,7 +38,6 @@ const Detail = (): ReactElement => {
     query({
       body: {},
     }).then((res: any) => {
-      console.log('>>> res', res)
       setData(res?.results)
     })
   }
@@ -46,7 +46,10 @@ const Detail = (): ReactElement => {
     <CoverLoading />
   ) : (
     <>
-      <PageHeader onBack={(): void => history.goBack()} title="Go back" />
+      <PageHeader
+        onBack={(): void => history.goBack()}
+        title={data?.name || data?.volume.name}
+      />
       <Card>
         <BodyCard>
           <MainInfo>

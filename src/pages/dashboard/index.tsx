@@ -1,6 +1,10 @@
+/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { FC, useEffect, useState } from 'react'
 
+import ecomCart from '@ecomplus/shopping-cart'
+import { notification } from 'antd'
 import { useHistory } from 'react-router-dom'
 
 import { UseRequest } from 'services/request.service'
@@ -17,7 +21,10 @@ import { ContainerGrid, ContainerList } from './styles'
 const Dashboard: FC = () => {
   // States
   const [comics, setComics] = useState<Comic[]>([])
-  const [mode, setMode] = useState<string | number>('list')
+  const [backupComics, setBackupComics] = useState<Comic[]>([])
+  const [favorites, setFavorites] = useState<Comic[]>([])
+  const [mode, setMode] = useState<string | number>('grid')
+  const [isFavoriteList, setIsFavoriteList] = useState(false)
 
   const history = useHistory()
 
@@ -38,8 +45,35 @@ const Dashboard: FC = () => {
     query({
       body: {},
     }).then((res: any) => {
-      setComics(res?.results)
+      processData(res?.results)
     })
+  }
+
+  /**
+   * @param data Comic[]
+   */
+  const processData = (data: Comic[]): void => {
+    try {
+      let results: Comic[] = data
+      const local = window.localStorage.getItem('ecomShoppingCart')
+      let items: Comic[] = []
+      if (local) {
+        items = JSON.parse(local as string)?.items
+      }
+      results = results.map(result => {
+        return {
+          ...result,
+          isFavorite: items.some(item => item.id === result.id),
+        }
+      })
+      setComics(isFavoriteList ? items : results)
+      setBackupComics(results)
+      setFavorites(items)
+    } catch (error) {
+      notification.error({
+        message: 'Oops! an error occurred, try again later.',
+      })
+    }
   }
 
   /**
@@ -50,7 +84,7 @@ const Dashboard: FC = () => {
   }
 
   /**
-   * @param url
+   * @param url string
    */
   const handleClick = (url: string): void => {
     const id = url
@@ -59,9 +93,58 @@ const Dashboard: FC = () => {
     history.push(`/comic/${id}`)
   }
 
+  /**
+   * @param comic Comic
+   * @returns void
+   */
+  const handleToggleFavorite = (comic: Comic) => (): void => {
+    const local = window.localStorage.getItem('ecomShoppingCart')
+    if (local) {
+      const items: Comic[] = JSON.parse(local as string)?.items
+      const exist = items.some(item => item.id === comic.id)
+      let title = ''
+      if (exist) {
+        ecomCart.removeItem(comic.id)
+        title = 'Comic removed from favorites'
+      } else {
+        ecomCart.addItem({
+          _id: comic.id,
+          ...comic,
+          isFavorite: true,
+          price: 0,
+          product_id: comic.issue_number,
+          quantity: 1,
+        })
+        title = 'Comic added from favorites'
+      }
+      const localComics = JSON.parse(JSON.stringify(backupComics))
+      processData(localComics)
+      notification.success({
+        message: title,
+      })
+    }
+  }
+
+  /**
+   * @param value
+   */
+  const handleToggleItems = (value: boolean): void => {
+    setIsFavoriteList(value)
+    if (value) {
+      setComics(favorites)
+    } else {
+      setComics(backupComics)
+    }
+  }
+
   return (
     <>
-      <Navbar onChange={handleChangeMode} value={mode} />
+      <Navbar
+        onChange={handleChangeMode}
+        value={mode}
+        isFavoriteList={isFavoriteList}
+        onChangeSwitch={handleToggleItems}
+      />
       {loading ? (
         <ContainerGrid>
           <CardSkeleton />
@@ -74,10 +157,12 @@ const Dashboard: FC = () => {
           {comics.map(comic => (
             <CardComicGrid
               key={comic.id}
-              title={`${comic.name} ${comic.issue_number}`}
+              title={`${comic.name || comic.volume.name} ${comic.issue_number}`}
               date={comic.date_added}
               image={comic.image.original_url}
               onClick={(): void => handleClick(comic.api_detail_url)}
+              onFavorite={handleToggleFavorite(comic)}
+              isFavorite={comic.isFavorite}
             />
           ))}
         </ContainerGrid>
@@ -90,6 +175,8 @@ const Dashboard: FC = () => {
               date={comic.date_added}
               image={comic.image.original_url}
               onClick={(): void => handleClick(comic.api_detail_url)}
+              onFavorite={handleToggleFavorite(comic)}
+              isFavorite={comic.isFavorite}
             />
           ))}
         </ContainerList>

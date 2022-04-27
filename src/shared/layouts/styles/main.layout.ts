@@ -5,6 +5,7 @@ export const Layout = styled(LayoutComponent)`
   height: auto;
   display: flex;
   flex-direction: column;
+  min-height: 100%;
 `
 
 export const Header = styled(Layout.Header)`
