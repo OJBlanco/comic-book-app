@@ -1,0 +1,61 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "baseUrl": "./src/",
+    "paths": {
+      "assets/*": [
+        "./assets/*"
+      ],
+      "styles/*": [
+        "./assets/styles/*"
+      ],
+      "fonts/*": [
+        "./assets/fonts/*"
+      ],
+      "hooks/*": [
+        "./hooks/*"
+      ],
+      "models/*": [
+        "./models/*"
+      ],
+      "helpers/*": [
+        "./helpers/*"
+      ],
+      "shared/*": [
+        "./shared/*"
+      ],
+      "pages/*": [
+        "./pages/*"
+      ],
+      "services/*": [
+        "./services/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

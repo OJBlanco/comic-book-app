@@ -3,10 +3,86 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "Omar Blanco",
-  "license": "ISC"
+  "license": "ISC",
+  "scripts": {
+    "dev": "webpack serve --mode development --config ./webpack.config.dev.js --history-api-fallback",
+    "build:st": "webpack --env NODE_ENV=st --mode production --config ./webpack.config.js",
+    "build:prod": "webpack --env NODE_ENV=prod --mode production --config ./webpack.config.js",
+    "serve": "npx serve dist -s",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "fix": "gts fix",
+    "posttest": "npm run lint"
+  },
+  "resolutions": {
+    "@types/react": "17.0.5",
+    "@types/react-dom": "17.0.5"
+  },
+  "dependencies": {
+    "@ant-design/icons": "4.7.0",
+    "@ecomplus/shopping-cart": "2.5.6",
+    "@ecomplus/utils": "1.4.1",
+    "antd": "4.20.0",
+    "react": "17.0.2",
+    "react-color": "2.19.3",
+    "react-dom": "17.0.2",
+    "react-router-dom": "5.2.0",
+    "styled-components": "^5.3.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.12.10",
+    "@babel/core": "7.12.10",
+    "@babel/plugin-proposal-class-properties": "7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "7.12.7",
+    "@babel/plugin-syntax-dynamic-import": "7.8.3",
+    "@babel/plugin-transform-runtime": "7.12.10",
+    "@babel/polyfill": "7.12.1",
+    "@babel/preset-env": "7.12.11",
+    "@babel/preset-react": "7.12.10",
+    "@babel/preset-typescript": "7.13.0",
+    "@types/antd": "1.0.0",
+    "@types/node": "12.0.0",
+    "@types/react": "17.0.5",
+    "@types/react-dom": "17.0.5",
+    "@types/react-router-dom": "5.1.7",
+    "@types/styled-components": "5.1.25",
+    "awesome-typescript-loader": "5.2.1",
+    "babel-loader": "8.2.2",
+    "copy-webpack-plugin": "9.0.1",
+    "css-loader": "5.0.1",
+    "dotenv": "10.0.0",
+    "eslint-import-resolver-typescript": "2.4.0",
+    "eslint-plugin-deprecation": "1.2.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsdoc": "32.3.0",
+    "eslint-plugin-react": "7.23.1",
+    "file-loader": "6.2.0",
+    "gts": "3.1.0",
+    "html-webpack-plugin": "4.5.0",
+    "mini-css-extract-plugin": "1.3.3",
+    "node-sass": "5.0.0",
+    "sass-loader": "10.1.0",
+    "style-loader": "2.0.0",
+    "terser-webpack-plugin": "5.0.3",
+    "typesafe-actions": "5.1.0",
+    "typescript": "4.2.4",
+    "url-loader": "4.1.1",
+    "webpack": "5.1.0",
+    "webpack-cli": "4.9.0",
+    "webpack-dev-server": "3.11.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
